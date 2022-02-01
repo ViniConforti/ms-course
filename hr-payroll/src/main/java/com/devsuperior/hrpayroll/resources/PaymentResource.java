@@ -1,7 +1,7 @@
-package com.devsuperior.hrpayroll.resource;
-
+package com.devsuperior.hrpayroll.resources;
 import com.devsuperior.hrpayroll.domain.Payment;
-import com.devsuperior.hrpayroll.usecase.PaymentUseCase;
+import com.devsuperior.hrpayroll.usecases.PaymentUseCase;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentResource {
     private final PaymentUseCase paymentUseCase;
 
+    @CircuitBreaker(name="hr-payment", fallbackMethod="getPaymentAlternative")
     @GetMapping(path = "/{workerId}/days/{days}")
     public ResponseEntity<Payment> getPayment(@PathVariable long workerId, @PathVariable int days){
         Payment newPayment = paymentUseCase.getPayment(workerId, days);
         return new ResponseEntity<>(newPayment, HttpStatus.OK);
+    }
+
+    // O parametro throwable precisa estar junto quando utilizar o circuit breaker do resilient4j
+    public ResponseEntity<Payment> getPaymentAlternative(long workId, int days,Throwable cause) {
+            Payment payment = Payment.builder().name("Brann")
+                    .dailyIncome(400.0)
+                    .days(days)
+                    .build();
+            return ResponseEntity.ok(payment);
     }
 }

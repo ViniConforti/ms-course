@@ -1,4 +1,4 @@
-package com.devsuperior.hrpayroll.usecase;
+package com.devsuperior.hrpayroll.usecases;
 import com.devsuperior.hrpayroll.domain.Payment;
 import com.devsuperior.hrpayroll.domain.Worker;
 import com.devsuperior.hrpayroll.feignclients.WorkerFeignClient;
