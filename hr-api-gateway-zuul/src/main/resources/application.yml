@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: hr-api-gateway-zuul
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+
+  cloud:
+    gateway:
+      routes:
+        - id: hr-worker
+          #o lb na uri significa load balance
+          uri: lb://hr-worker
+          predicates:
+            - Path=/hr-worker/**
+          filters:
+            - RewritePath=/hr-worker/(?<segment>.*), /$\{segment}
+        - id: hr-payroll
+          uri: lb://hr-payroll
+          predicates:
+            - Path=/hr-payroll/**
+          filters:
+            - RewritePath=/hr-payroll/, /
+        - id: hr-user
+          uri: lb://hr-user
+          predicates:
+            - Path=/hr-user/**
+          filters:
+            - RewritePath=/hr-user/, /
+        - id: hr-oauth
+          uri: lb://hr-oauth
+          predicates:
+            - Path=/hr-oauth/**
+          filters:
+            - RewritePath=/hr-oauth/, /
+
+server:
+  port: 8765
+
+eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
