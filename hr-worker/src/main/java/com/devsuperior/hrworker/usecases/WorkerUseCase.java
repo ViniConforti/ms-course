@@ -1,7 +1,7 @@
-package com.devsuperior.hrworker.usecase;
+package com.devsuperior.hrworker.usecases;
 
 import com.devsuperior.hrworker.domain.Worker;
-import com.devsuperior.hrworker.storage.WorkerStorage;
+import com.devsuperior.hrworker.storages.WorkerStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

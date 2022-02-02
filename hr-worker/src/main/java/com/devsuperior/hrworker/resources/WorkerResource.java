@@ -1,10 +1,11 @@
-package com.devsuperior.hrworker.resource;
+package com.devsuperior.hrworker.resources;
 
 import com.devsuperior.hrworker.domain.Worker;
-import com.devsuperior.hrworker.usecase.WorkerUseCase;
+import com.devsuperior.hrworker.usecases.WorkerUseCase;
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class WorkerResource {
 
     private final Environment environment;
 
+    @Value("${test.config}")
+    private String testConfigs;
+
     @GetMapping()
     public ResponseEntity<List<Worker>> list(){
         return new ResponseEntity<>(this.workerUseCase.listAll(), HttpStatus.OK);
@@ -35,5 +39,10 @@ public class WorkerResource {
         log.info(portInfo);
         return new ResponseEntity<>(this.workerUseCase.findByIdOrThrowBadRequestException(id),
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/configs")
+    public ResponseEntity<String> getConfigs(){
+        return ResponseEntity.ok(this.testConfigs);
     }
 }
