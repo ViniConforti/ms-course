@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,14 @@ import java.util.List;
 @RequestMapping(value = "/workers")
 @RequiredArgsConstructor
 @Log4j2
+
+/* Essa anotaçao deve ser usada em todas as classes que acessam o servidor de configuracao
+OBS: é necessária a dependencia do spring boot actuator.
+O SpringBoot Actuator permite atualizacao em tempo de execucao das configuracoes.
+Se alguma configuracao for atualizada no repositorio remoto, o actuator vai conseguir pegar
+essa nova configuracao.
+ */
+@RefreshScope
 public class WorkerResource {
     private final WorkerUseCase workerUseCase;
 
