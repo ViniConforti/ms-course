@@ -2,6 +2,11 @@ spring:
   application:
     name: hr-oauth
 
+  profiles:
+    active: default
+  config:
+    import: configserver:http://localhost:8888
+
 server:
   port: ${PORT:0}
 
@@ -12,3 +17,9 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+# Permite que o actuator atualize as configurações em runtime
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

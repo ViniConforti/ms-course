@@ -5,6 +5,7 @@ import com.devsuperior.hroauth.usecases.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +19,10 @@ public class UserResource {
     private final UserUseCase userUseCase;
 
     @GetMapping(value = "/search")
-    public ResponseEntity<User> findByEmail(@RequestParam String email){
+    public ResponseEntity<UserDetails> findByEmail(@RequestParam String email){
         try {
-            User user = userUseCase.findByEmail(email);
-            return ResponseEntity.ok(user);
+            UserDetails userDetails = userUseCase.loadUserByUsername(email);
+            return ResponseEntity.ok(userDetails);
         }
         catch (IllegalArgumentException e){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
