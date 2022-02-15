@@ -17,7 +17,7 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-# Permite que o actuator atualize as configurações em runtime
+# Permite que o actuator atualize as configurÃ§Ãµes em runtime
 management:
   endpoints:
     web:
