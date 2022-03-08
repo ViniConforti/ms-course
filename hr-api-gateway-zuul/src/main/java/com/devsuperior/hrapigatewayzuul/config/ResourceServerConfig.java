@@ -37,6 +37,7 @@ public class ResourceServerConfig {
         http.oauth2ResourceServer()
                 .authenticationManagerResolver(exchange -> Mono.just(authenticationManager))
                 .bearerTokenConverter(bearerTokenConverter);
+        //http.cors().configurationSource(corsConfiguration());
         return http.build();
     }
 
