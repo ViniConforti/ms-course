@@ -3,9 +3,9 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: prod
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:http://hr-config-server:8888
 
   application:
     name: hr-worker
@@ -16,7 +16,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://hr-eureka-server/eureka
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
