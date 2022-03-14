@@ -25,6 +25,12 @@ services:
     volumes:
       - hr-user-pg12-data:/var/lib/postgresql/data
 
+  hr-config-server:
+    image: hr-config-server:v1
+    container_name: hr-config-server
+    ports:
+        - "8888:8888"
+
 volumes:
   hr-worker-pg12-data: {}
   hr-user-pg12-data: {}
