@@ -31,6 +31,12 @@ services:
     ports:
         - "8888:8888"
 
+  hr-eureka-server:
+    image: hr-eureka-server:v1
+    container_name: hr-eureka-server
+    ports:
+      - "8761:8761"
+
 volumes:
   hr-worker-pg12-data: {}
   hr-user-pg12-data: {}
