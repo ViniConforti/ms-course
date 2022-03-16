@@ -37,6 +37,24 @@ services:
     ports:
       - "8761:8761"
 
+  hr-worker:
+    image: hr-worker:v1
+    container_name: hr-worker
+    depends_on:
+      - hr-eureka-server
+      - hr-config-server
+      - hr-worker-pg12
+    restart: on-failure
+
+  hr-user:
+    image: hr-user:v1
+    container_name: hr-user
+    depends_on:
+      - hr-config-server
+      - hr-eureka-server
+      - hr-user-pg12
+    restart: on-failure
+
 volumes:
   hr-worker-pg12-data: {}
   hr-user-pg12-data: {}
