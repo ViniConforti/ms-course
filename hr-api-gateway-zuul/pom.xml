@@ -94,7 +94,7 @@
 
 	<build>
 		<plugins>
-			<!--<plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -106,29 +106,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<configuration>
-					<from>
-						<image>adoptopenjdk:11-jre</image>
-					</from>
-					<to>
-						<image>${docker.image.name}</image>
-						<tags>
-							<version>${project.version}</version>
-						</tags>
-					</to>
-					<container>
-						<ports>
-							<port>8765</port>
-						</ports>
-						<mainClass>com.devsuperior.hrapigatewayzuul.HrApiGatewayZuulApplication</mainClass>
-						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
-					</container>
-				</configuration>
-			</plugin>-->
+
 		</plugins>
 	</build>
 

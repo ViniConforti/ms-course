@@ -39,7 +39,14 @@ services:
 
   hr-worker:
     image: hr-worker:v1
-    container_name: hr-worker
+    depends_on:
+      - hr-eureka-server
+      - hr-config-server
+      - hr-worker-pg12
+    restart: on-failure
+
+  hr-worker2:
+    image: hr-worker:v1
     depends_on:
       - hr-eureka-server
       - hr-config-server
@@ -54,6 +61,35 @@ services:
       - hr-eureka-server
       - hr-user-pg12
     restart: on-failure
+
+  hr-payroll:
+    image: hr-payroll:v1
+    container_name: hr-payroll
+    depends_on:
+      - hr-config-server
+      - hr-eureka-server
+      - hr-worker
+    restart: always
+
+  hr-oauth:
+    image: hr-oauth:v1
+    depends_on:
+      - hr-config-server
+      - hr-eureka-server
+      - hr-user
+    restart: always
+
+  hr-api-gateway-zuul:
+    image: hr-api-gateway-zuul:v1
+    container_name: hr-api-gateway-zuul
+    ports:
+      - "8765:8765"
+    depends_on:
+      - hr-worker
+      - hr-user
+      - hr-payroll
+      - hr-oauth
+    restart: always
 
 volumes:
   hr-worker-pg12-data: {}

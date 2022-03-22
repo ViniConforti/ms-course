@@ -14,7 +14,8 @@
 	<description>Payroll Microservice</description>
 	<properties>
 		<java.version>11</java.version>
-		<jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+		<jib.maven.plugin.version>3.1.4</jib.maven.plugin.version>
+		<jib.from.image>adoptopenjdk:11-jre</jib.from.image>
 		<docker.image.name>${project.name}</docker.image.name>
 	</properties>
 	<dependencies>
@@ -81,6 +82,27 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib.maven.plugin.version}</version>
+				<configuration>
+					<from>
+						<image>${jib.from.image}</image>
+					</from>
+					<to>
+						<image>${docker.image.name}</image>
+						<tags>
+							<tag>${project.version}</tag>
+						</tags>
+					</to>
+					<container>
+						<mainClass>com.devsuperior.hrpayroll.HrPayrollApplication</mainClass>
+						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+					</container>
 				</configuration>
 			</plugin>
 
